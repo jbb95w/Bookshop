@@ -17,7 +17,7 @@ It allows users to browse through a collection of books, add their preferred tit
 
 ---
 
-## Folder Stracture
+## Folder Structure
 
 BookStore/<br>
 ├── src/<br>
