@@ -1,41 +1,20 @@
 import React from "react";
-// import { Routes, Route, Link } from "react-router";
+import { Routes, Route, Link } from "react-router-dom";
+import Home from "./components/Home";
+import About from "./components/About";
 import NavBar from "./components/NavBar";
-import Hero from "./components/Hero";
-
 
 function App() {
-
   return (
     <>
-      <NavBar/>
-      <Hero />
+      <NavBar />
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
     </>
- )
+  );
 }
 
-export default App
-
-
-
-{/* <img style={mask-top-left} src="/img-logo/logo.png" alt="logo" /> */}
-
-{/* <nav style={{ marginBottom: "20px" }}>
-        <Link to="/" style={{ margin: "10px" }}>Home</Link>
-        <Link to="/about" style={{ margin: "10px" }}>About</Link>
-        <Link to="/contact" style={{ margin: "10px" }}>Contact</Link> 
-      </nav>*/}
-
-      {/* This decides which page to show */}
-      {/* <Routes>
-        <Route path="/" element= {<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-      </Routes> */}
-      
-
-
-
-
-
-
+export default App;

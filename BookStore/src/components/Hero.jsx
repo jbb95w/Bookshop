@@ -35,7 +35,6 @@ const Hero = () => {
 
   return (
     <>
-      {/* Hero Section */}
       <section className="relative bg-cover bg-center h-screen bg-[url('./assets/bp.jpg')] flex items-center justify-center text-center">
         <div className="absolute inset-0 bg-black/40"></div>
 
