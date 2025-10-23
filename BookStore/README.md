@@ -17,18 +17,6 @@ This project was developed as part of a college coursework to demonstrate fronte
 
 ---
 
-## Tech Stack
-
-| Category | Technology |<br>
-|-----------|-------------|<br>
-| Frontend | React.js (Vite) |<br>
-| Styling |  TailwindCSS |<br>
-| Routing | React Router DOM |<br>
-| Package Manager | npm |<br>
-| Build Tool | Vite |<br>
-
----
-
 ## Folder Stracture
 
 BookStore/<br>
