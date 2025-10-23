@@ -1,32 +1,20 @@
 import React from "react";
-import { Routes, Route, Link } from "react-router";
+// import { Routes, Route, Link } from "react-router";
 import NavBar from "./components/NavBar";
 
 
 function App() {
 
   return (
-    <>
-    <div className="w=1/3">
-      <div className="flex justify-evenly justify">
-        <img style={mask-top-left} src="/img-logo/logo.png" alt="logo" />
-        <NavBar/>
-
-      </div>
-
-    </div>
-      
-
-      
-    </>
-  )
+    <NavBar/>
+ )
 }
 
 export default App
 
 
 
-
+{/* <img style={mask-top-left} src="/img-logo/logo.png" alt="logo" /> */}
 
 {/* <nav style={{ marginBottom: "20px" }}>
         <Link to="/" style={{ margin: "10px" }}>Home</Link>
