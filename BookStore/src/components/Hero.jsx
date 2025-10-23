@@ -2,23 +2,34 @@ import React, { useState } from "react";
 
 const Hero = () => {
   const [search, setSearch] = useState("");
-  // hold the api return.
-  const [filteredBooks, setFilteredBooks] = useState([]);
-  const books = [
-    { id: 1, title: "The Lost World" },
-    { id: 2, title: "Harry Potter" },
-    { id: 3, title: "Percy Jackson" },
-    { id: 4, title: "The Hobbit" },
-  ];
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
-    const results = books.filter((book) =>
-      book.title.toLowerCase().includes(search.toLowerCase())
-    );
-    setFilteredBooks(results);
-  };
+    if (!search.trim()) return; // stop if input is empty
 
+    setLoading(true);
+    setError("");
+    setBooks([]);
+     try {
+      const response = await fetch(
+        `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(search)}`
+      );
+      const data = await response.json();
+
+      if (data.items) {
+        setBooks(data.items);
+      } else {
+        setError("No books found.");
+      }
+    } catch (err) {
+      setError("Something went wrong while fetching data.");
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <section className="relative bg-cover bg-center h-screen bg-[url('./assets/bp.jpg')] flex items-center justify-center text-center">
       <div className="absolute inset-0 bg-black/40"></div>
@@ -49,16 +60,45 @@ const Hero = () => {
             </button>
           </div>
         </form>
-        <div className="mt-6 text-white">
-          {filteredBooks.length > 0 ? (
-            filteredBooks.map((book) => (
-              <p key={book.id} className="mb-2 text-lg font-semibold">
-                {book.title}
-              </p>
-            ))
-          ) : (
-            <p>No books found. Try searching something else!</p>
-          )}
+
+        <div>
+      {/* Loading and error messages */}
+      {loading ? (
+        <p style={{ color: "yellow" }}>Loading...</p>
+      ) : error ? (
+        <p style={{ color: "red" }}>{error}</p>
+      ) : null}
+      </div>
+      {/* Display books */}
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {books.map((book) => {
+            const info = book.volumeInfo;
+            return (
+              <div
+                key={book.id}
+                className="bg-white/20 p-4 rounded-lg text-left text-white backdrop-blur-sm"
+              >
+                <h3 className="font-bold mb-2 text-lg">
+                  {info.title || "No Title"}
+                </h3>
+                {info.imageLinks && (
+                  <img
+                    src={info.imageLinks.thumbnail}
+                    alt={info.title}
+                    className="w-24 h-auto mb-2 rounded"
+                  />
+                )}
+                <p className="text-sm italic mb-1">
+                  {info.authors ? info.authors.join(", ") : "Unknown Author"}
+                </p>
+                <p className="text-xs text-gray-300">
+                  {info.description
+                    ? info.description.slice(0, 100) + "..."
+                    : "No description available."}
+                </p>
+              </div>
+              );
+          })}
         </div>
       </div>
     </section>
