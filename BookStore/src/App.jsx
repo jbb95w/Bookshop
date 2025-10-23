@@ -1,12 +1,16 @@
 import React from "react";
 // import { Routes, Route, Link } from "react-router";
 import NavBar from "./components/NavBar";
+import Hero from "./components/Hero";
 
 
 function App() {
 
   return (
-    <NavBar/>
+    <>
+      <NavBar/>
+      <Hero />
+    </>
  )
 }
 
