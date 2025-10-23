@@ -2,7 +2,7 @@
 
 BookStore is a simple and interactive online book store web application built using React.js.  
 It allows users to browse through a collection of books, add their preferred titles to the cart, and manage them before purchase.  
-This project was developed as part of a college coursework to demonstrate frontend development concepts using React.
+
 
 ---
 
