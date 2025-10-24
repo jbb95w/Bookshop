@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaCartArrowDown } from "react-icons/fa6";
+import { GiBasket } from "react-icons/gi";
 
 function NavBar() {
   return (
@@ -20,7 +20,7 @@ function NavBar() {
           </Link>
 
           <Link to="/cart" className="text-gray-100 text-lg hover:text-yellow-400 transition">
-            <FaCartArrowDown size={20} />
+            <GiBasket size={20} />
           </Link>
         </div>
       </div>
