@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import BookList from "./BookList";
+import { useNavigate } from "react-router-dom";
 
-const Hero = () => {
+const Hero = ({ onAddToCart }) => {
   const [search, setSearch] = useState("");
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
     const resultsRef = React.useRef(null);  
-    const [cart, setCart] = useState([]);
+    const navigate = useNavigate();
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -38,9 +39,9 @@ const Hero = () => {
     }
   };
 
- const handleAddToCart = (book) => {
-    setCart((prev) => [...prev, book]);
-    alert(`${book.volumeInfo.title} added to cart!`);
+ const handleAddToList = (book) => {
+    onAddToCart?.(book);
+    navigate("/cart");
   };
 
   return (
@@ -73,10 +74,11 @@ const Hero = () => {
         </div>
       </section>
         <div ref={resultsRef}>
-            <BookList books={books} loading={loading} error={error} 
-            handleAddToCart={handleAddToCart}
-
-
+            <BookList
+              books={books}
+              loading={loading}
+              error={error}
+              handleAddToCart={handleAddToList}
             />
 
         </div>

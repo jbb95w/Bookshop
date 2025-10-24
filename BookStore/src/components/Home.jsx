@@ -1,10 +1,10 @@
 import React from "react";
 import Hero from "./Hero";
 
-const Home = () => {
+const Home = ({ onAddToCart }) => {
   return (
     <>
-      <Hero />
+      <Hero onAddToCart={onAddToCart} />
     </>
   );
 };
