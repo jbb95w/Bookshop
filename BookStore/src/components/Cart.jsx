@@ -1,64 +1,55 @@
 import React from "react";
 
-const Cart = ({ cart, onRemoveFromCart, onCheckout }) => {
+const Cart = ({ cart, setCart }) => {
+  // Function to remove a book from cart
+  const handleRemove = (bookId) => {
+    setCart(cart.filter(book => book.id !== bookId));
+  };
 
-  const safeCart = cart || [];
-  
-  const totalPrice = safeCart
-    .reduce((acc, book) => acc + parseFloat(book.price), 0)
-    .toFixed(2);
-
-  if (safeCart.length === 0) {
+  if (cart.length === 0) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 text-gray-600">
-        <h2 className="text-2xl font-bold mb-3">Your Cart is Empty</h2>
-        <p>Search and add some books to your cart first!</p>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-gray-800 mb-4">Your Basket is Empty</h2>
+          <p className="text-gray-600">Add some books to get started!</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <h2 className="text-3xl font-bold text-center mb-6 text-stone-800">Your Cart</h2>
-
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {safeCart.map((book) => (
-          <div
-            key={book.id}
-            className="bg-white shadow-md rounded-lg p-4 flex flex-col items-center border border-gray-200"
-          >
-            <img
-              src={book.volumeInfo.imageLinks?.thumbnail || "https://via.placeholder.com/150"}
-              alt={book.volumeInfo.title}
-              className="w-32 h-48 object-cover mb-3 rounded"
-            />
-            <h3 className="font-semibold text-lg text-center">
-              {book.volumeInfo.title}
-            </h3>
-            <p className="text-sm text-gray-600 mb-2">
-              {book.volumeInfo.authors?.join(", ") || "Unknown Author"}
-            </p>
-            <p className="text-yellow-600 font-bold mb-3">${book.price}</p>
-
-            <button
-              onClick={() => onRemoveFromCart(book.id)}
-              className="bg-red-500 text-white px-4 py-1 rounded-md hover:bg-red-600 transition"
-            >
-              Remove
-            </button>
-          </div>
-        ))}
-      </div>
-
-      {/* Checkout Section */}
-      <div className="text-center mt-8">
-        <p className="text-xl font-semibold mb-4">Total: ${totalPrice}</p>
-        <button
-          onClick={onCheckout}
-          className="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition font-semibold"
-        >
-          Proceed to Payment
-        </button>
+    <div className="min-h-screen bg-gray-50 py-10">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold mb-6 text-gray-800">Your Basket ({cart.length} items)</h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {cart.map((book) => {
+            const info = book.volumeInfo;
+            return (
+              <div key={book.id} className="bg-white rounded-lg shadow-md p-4">
+                {info.imageLinks && (
+                  <img
+                    src={info.imageLinks.thumbnail}
+                    alt={info.title}
+                    className="w-full h-48 object-cover rounded mb-3"
+                  />
+                )}
+                
+                <h3 className="font-bold text-lg mb-2">{info.title || "No Title"}</h3>
+                <p className="text-sm italic text-gray-600 mb-2">
+                  {info.authors ? info.authors.join(", ") : "Unknown Author"}
+                </p>
+                
+                <button
+                  onClick={() => handleRemove(book.id)}
+                  className="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600 transition"
+                >
+                  Remove from Basket
+                </button>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import BookList from "./BookList";
 
-const Hero = () => {
+const Hero = ({ handleAddToCart }) => { 
   const [search, setSearch] = useState("");
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-    const resultsRef = React.useRef(null);  
-    const [cart, setCart] = useState([]);
-
+  const resultsRef = React.useRef(null);
+  
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!search.trim()) return;
@@ -36,11 +35,6 @@ const Hero = () => {
     } finally {
       setLoading(false);
     }
-  };
-
- const handleAddToCart = (book) => {
-    setCart((prev) => [...prev, book]);
-    alert(`${book.volumeInfo.title} added to cart!`);
   };
 
   return (
@@ -72,27 +66,17 @@ const Hero = () => {
           </form>
         </div>
       </section>
-        <div ref={resultsRef}>
-            <BookList books={books} loading={loading} error={error} 
-            handleAddToCart={handleAddToCart}
-
-
-            />
-
-        </div>
-
-
       
-
+      <div ref={resultsRef}>
+        <BookList 
+          books={books} 
+          loading={loading} 
+          error={error} 
+          handleAddToCart={handleAddToCart}  // 👈 Pass it down to BookList
+        />
+      </div>
     </>
   );
 };
 
 export default Hero;
-
-
-
-
-
-
-
