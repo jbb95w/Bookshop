@@ -22,6 +22,10 @@ function NavBar() {
           <Link to="/cart" className="text-gray-100 text-lg hover:text-yellow-400 transition">
             <GiBasket size={20} />
           </Link>
+          <Link to="/signup" className="text-gray-100 text-lg hover:text-yellow-400 transition">
+            Sign Up
+          </Link>
+
         </div>
       </div>
     </nav>
