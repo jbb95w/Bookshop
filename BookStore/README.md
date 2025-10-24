@@ -1,4 +1,4 @@
-# 📚 Book Hub (Phase 2 Project)
+# Book Hub (Phase 2 Project)
 
 #### Date: 24/10/2025
 
