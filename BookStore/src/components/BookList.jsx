@@ -1,10 +1,8 @@
 import React from "react";
 
-const BookList = ({ books, loading, error }) => {
-  if (loading)
-    return <p className="text-yellow-500 text-center mt-6">Loading...</p>;
-  if (error)
-    return <p className="text-red-500 text-center mt-6">{error}</p>;
+const BookList = ({ books, loading, error, handleAddToCart }) => {
+  if (loading) return <p className="text-yellow-500 text-center mt-6">Loading...</p>;
+  if (error) return <p className="text-red-500 text-center mt-6">{error}</p>;
   if (!books.length) return null;
 
   return (
@@ -13,11 +11,7 @@ const BookList = ({ books, loading, error }) => {
         {books.map((book) => {
           const info = book.volumeInfo;
           return (
-            <div
-              key={book.id}
-              className="relative bg-white rounded-lg shadow-md overflow-hidden group hover:shadow-lg transition"
-            >
-              {/* Book image */}
+            <div key={book.id} className="relative bg-white rounded-lg shadow-md overflow-hidden group hover:shadow-lg transition">
               {info.imageLinks && (
                 <img
                   src={info.imageLinks.thumbnail}
@@ -26,13 +20,22 @@ const BookList = ({ books, loading, error }) => {
                 />
               )}
 
-              {/* Hover details */}
-              <div className="absolute inset-0 flex flex-col justify-end bg-black bg-opacity-60 text-white p-4 opacity-0 group-hover:opacity-100 transition duration-300">
-                <h3 className="font-semibold text-lg">{info.title || "No Title"}</h3>
-                <p className="text-sm italic text-gray-200">
-                  {info.authors ? info.authors.join(", ") : "Unknown Author"}
-                </p>
-              </div>
+              <h3 className="font-bold text-lg mb-1">{info.title || "No Title"}</h3>
+              <p className="text-sm italic text-gray-600 mb-1">
+                {info.authors ? info.authors.join(", ") : "Unknown Author"}
+              </p>
+              <p className="text-sm text-gray-700">
+                {info.description
+                  ? info.description.slice(0, 100) + "..."
+                  : "No description available."}
+              </p>
+
+              <button
+                onClick={() => handleAddToCart(book)}
+                className="mt-3 w-full bg-yellow-400 text-white py-2 rounded hover:bg-yellow-500 transition"
+              >
+                Add to Cart
+              </button>
             </div>
           );
         })}

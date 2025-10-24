@@ -6,6 +6,8 @@ const Hero = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+    const resultsRef = React.useRef(null);  
+    const [cart, setCart] = useState([]);
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -23,6 +25,9 @@ const Hero = () => {
 
       if (data.items) {
         setBooks(data.items);
+        setTimeout(() => {
+          resultsRef.current?.scrollIntoView({ behavior: "smooth" });
+        }, 300);
       } else {
         setError("No books found.");
       }
@@ -31,6 +36,11 @@ const Hero = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+ const handleAddToCart = (book) => {
+    setCart((prev) => [...prev, book]);
+    alert(`${book.volumeInfo.title} added to cart!`);
   };
 
   return (
@@ -62,10 +72,27 @@ const Hero = () => {
           </form>
         </div>
       </section>
+        <div ref={resultsRef}>
+            <BookList books={books} loading={loading} error={error} 
+            handleAddToCart={handleAddToCart}
 
-      <BookList books={books} loading={loading} error={error} />
+
+            />
+
+        </div>
+
+
+      
+
     </>
   );
 };
 
 export default Hero;
+
+
+
+
+
+
+
