@@ -34,7 +34,7 @@ const BookList = ({ books, loading, error, handleAddToCart }) => {
                 onClick={() => handleAddToCart(book)}
                 className="mt-3 w-full bg-yellow-400 text-white py-2 rounded hover:bg-yellow-500 transition"
               >
-                Add to Cart
+                Add to List
               </button>
             </div>
           );

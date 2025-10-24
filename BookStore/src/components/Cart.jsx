@@ -5,12 +5,20 @@ const Cart = ({ cart, onRemoveFromCart, onCheckout }) => {
   const safeCart = cart || [];
   
   const totalPrice = safeCart
-    .reduce((acc, book) => acc + parseFloat(book.price), 0)
+    .reduce((acc, book) => {
+      const numericPrice =
+        Number(book?.price) ||
+        Number(book?.saleInfo?.listPrice?.amount) ||
+        Number(book?.saleInfo?.retailPrice?.amount) ||
+        0;
+      return acc + numericPrice;
+    }, 0)
     .toFixed(2);
 
   if (safeCart.length === 0) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 text-gray-600">
+        <img src="/img-logo/logo.png" alt="Logo" className="w-16 h-16 mb-4" />
         <h2 className="text-2xl font-bold mb-3">Your Cart is Empty</h2>
         <p>Search and add some books to your cart first!</p>
       </div>
@@ -19,7 +27,10 @@ const Cart = ({ cart, onRemoveFromCart, onCheckout }) => {
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      <h2 className="text-3xl font-bold text-center mb-6 text-stone-800">Your Cart</h2>
+      <div className="flex flex-col items-center mb-6">
+        <img src="/img-logo/logo.png" alt="Logo" className="w-16 h-16 mb-2" />
+        <h2 className="text-3xl font-bold text-center text-stone-800">Your Cart</h2>
+      </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {safeCart.map((book) => (
@@ -38,7 +49,14 @@ const Cart = ({ cart, onRemoveFromCart, onCheckout }) => {
             <p className="text-sm text-gray-600 mb-2">
               {book.volumeInfo.authors?.join(", ") || "Unknown Author"}
             </p>
-            <p className="text-yellow-600 font-bold mb-3">${book.price}</p>
+            <p className="text-yellow-600 font-bold mb-3">$
+              {(
+                Number(book?.price) ||
+                Number(book?.saleInfo?.listPrice?.amount) ||
+                Number(book?.saleInfo?.retailPrice?.amount) ||
+                0
+              ).toFixed(2)}
+            </p>
 
             <button
               onClick={() => onRemoveFromCart(book.id)}
