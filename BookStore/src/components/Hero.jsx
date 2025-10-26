@@ -72,7 +72,7 @@ const Hero = ({ handleAddToCart }) => {
           books={books} 
           loading={loading} 
           error={error} 
-          handleAddToCart={handleAddToCart}  // 👈 Pass it down to BookList
+          handleAddToCart={handleAddToCart}  //  Pass it down to BookList
         />
       </div>
     </>
